@@ -11,3 +11,25 @@ router.get('/', async (req, res) => {
     res.status(200).json({ error: '' })
   }
 })
+
+router.post('/', async (req, res) => {
+  try {
+    const { text, date, img } = req.body
+
+    const newPost = new Post({
+      date,
+      img,
+      text,
+      author: {
+        username: res.user.username,
+        img: res.user.img,
+        _id: res.user._id,
+      },
+    })
+    await newPost.save()
+
+    res.status(200).json({ payload: newPost })
+  } catch (e) {
+    res.status(200).json({ error: e.message })
+  }
+})
