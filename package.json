@@ -4,9 +4,9 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start-test": "cross-env NODE_ENV=test nodemon app",
-    "start": "node app",
-    "start-dev": "cross-env NODE_ENV=dev nodemon app"
+    "start-test": "cross-env NODE_ENV=test nodemon server",
+    "start": "node server",
+    "start-dev": "cross-env NODE_ENV=dev nodemon server"
   },
   "keywords": [
     "node.js",

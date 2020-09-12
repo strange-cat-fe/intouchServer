@@ -5,14 +5,14 @@ const Post = require('../models/Post')
 
 router.get('/', async (req, res) => {
   try {
-    const posts = await Post.find().populate('author').exec()
+    const posts = await Post.find().populate().exec()
     res.status(200).json({ payload: posts })
   } catch (e) {
     res.status(200).json({ error: '' })
   }
 })
 
-router.post('/', async (req, res) => {
+router.post('/new', async (req, res) => {
   try {
     const { text, date, img } = req.body
 
@@ -33,3 +33,5 @@ router.post('/', async (req, res) => {
     res.status(200).json({ error: e.message })
   }
 })
+
+module.exports = router
