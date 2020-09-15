@@ -8,7 +8,7 @@ router.get('/', async (req, res) => {
     const posts = await Post.find().populate().exec()
     res.status(200).json({ payload: posts })
   } catch (e) {
-    res.status(200).json({ error: '' })
+    res.status(200).json({ error: e })
   }
 })
 
@@ -30,7 +30,7 @@ router.post('/new', async (req, res) => {
 
     res.status(200).json({ payload: newPost })
   } catch (e) {
-    res.status(200).json({ error: e.message })
+    res.status(200).json({ error: e })
   }
 })
 

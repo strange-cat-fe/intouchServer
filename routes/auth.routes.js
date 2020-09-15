@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 
 const User = require('../models/User')
+const config = require('../lib/config')
 
 router.post('/signin', async (req, res) => {
   try {
@@ -20,7 +21,7 @@ router.post('/signin', async (req, res) => {
             username: candidate.username,
             _id: candidate._id,
           },
-          process.env.JWT_SECRET,
+          config.jwtSecret,
           { expiresIn: '5d' }
         )
 
@@ -30,7 +31,7 @@ router.post('/signin', async (req, res) => {
     }
     res.status(200).json({ error: "User with this email doesn't exist" })
   } catch (e) {
-    res.status(200).json({ error: e.message })
+    res.status(200).json({ error: e })
   }
 })
 
@@ -46,18 +47,19 @@ router.post('/signup', async (req, res) => {
       const newUser = new User({ email, username, password: hashedPassword })
       const { _id } = await newUser.save()
 
-      const token = jwt.sign({ username, _id }, process.env.JWT_SECRET, {
+      const token = jwt.sign({ username, _id }, config.jwtSecret, {
         expiresIn: '5d',
       })
 
       return res.status(200).json({ payload: token })
     }
+
     res
       .status(200)
       .json({ error: 'User with this email or username already exists' })
   } catch (e) {
     console.log(e)
-    res.status(200).json({ error: e.message })
+    res.status(200).json({ error: e })
   }
 })
 
