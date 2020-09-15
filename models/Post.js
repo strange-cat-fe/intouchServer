@@ -20,6 +20,11 @@ const post = new Schema({
       img: String,
     },
   },
+  likes: {
+    type: {
+      _id: String,
+    },
+  },
 })
 
 module.exports = model('Post', post)
