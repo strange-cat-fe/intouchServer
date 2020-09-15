@@ -21,9 +21,12 @@ const post = new Schema({
     },
   },
   likes: {
-    type: {
-      _id: String,
-    },
+    type: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+      },
+    ],
   },
 })
 
