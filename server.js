@@ -1,4 +1,3 @@
-require('dotenv').config()
 const app = require('./app')
 const mongoDB = require('./lib/mongoose-connect')
 
