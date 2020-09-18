@@ -20,6 +20,7 @@ router.post('/signin', async (req, res) => {
           {
             username: candidate.username,
             _id: candidate._id,
+            following: candidate.following,
           },
           config.jwtSecret,
           { expiresIn: '5d' }
@@ -47,9 +48,13 @@ router.post('/signup', async (req, res) => {
       const newUser = new User({ email, username, password: hashedPassword })
       const { _id } = await newUser.save()
 
-      const token = jwt.sign({ username, _id }, config.jwtSecret, {
-        expiresIn: '5d',
-      })
+      const token = jwt.sign(
+        { username, _id, following: [] },
+        config.jwtSecret,
+        {
+          expiresIn: '5d',
+        }
+      )
 
       return res.status(200).json({ payload: token })
     }
